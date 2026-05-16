@@ -1,0 +1,1199 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'IBM Plex Sans',sans-serif;background:#f4f2ee;min-height:100vh;color:#1a1a1a;font-size:14px;line-height:1.5}
+.app-shell{display:flex;min-height:100vh}
+
+/* SIDEBAR */
+.sidebar{width:210px;background:#1a1a1a;flex-shrink:0;display:flex;flex-direction:column;padding:0}
+.sidebar-top{padding:18px 16px 12px;border-bottom:1px solid #2e2e2e}
+.wordmark{font-size:15px;font-weight:600;color:#fff;letter-spacing:-.3px}
+.wordmark span{color:#c8f135;font-family:'IBM Plex Mono',monospace}
+.org-name{font-size:11px;color:#666;margin-top:2px}
+.sidebar-nav{padding:8px 0;flex:1}
+.nav-section{padding:16px 16px 4px;font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:#444;font-weight:500}
+.nav-link{display:flex;align-items:center;gap:9px;padding:7px 16px;color:#aaa;font-size:13px;cursor:pointer;border-left:2px solid transparent;transition:color .1s,background .1s}
+.nav-link:hover{color:#fff;background:#222}
+.nav-link.on{color:#fff;border-left-color:#c8f135;background:#222}
+.nav-link svg{width:14px;height:14px;flex-shrink:0;opacity:.7}
+.nav-link.on svg{opacity:1}
+.sidebar-bottom{padding:12px 16px;border-top:1px solid #2e2e2e}
+.user-row{display:flex;align-items:center;gap:9px}
+.avatar-sm{width:28px;height:28px;border-radius:50%;background:#333;color:#aaa;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.user-name{font-size:12px;color:#ccc;font-weight:500;line-height:1.2}
+.user-role{font-size:10px;color:#555}
+.btn-signout{margin-top:8px;width:100%;padding:5px 0;background:none;border:1px solid #333;border-radius:4px;color:#555;font-size:11px;cursor:pointer;font-family:inherit;transition:border-color .1s,color .1s}
+.btn-signout:hover{border-color:#666;color:#aaa}
+
+/* MAIN AREA */
+.main{flex:1;overflow-y:auto;background:#f4f2ee;min-height:100vh}
+.page-wrap{padding:28px 32px;max-width:1000px}
+.pg-title{font-size:20px;font-weight:600;color:#1a1a1a;margin-bottom:2px;letter-spacing:-.3px}
+.pg-sub{font-size:12px;color:#888;margin-bottom:24px}
+.divider{border:none;border-top:1px solid #e5e3df;margin:20px 0}
+
+/* CARDS */
+.card{background:#fff;border:1px solid #e5e3df;border-radius:8px;padding:20px}
+.card+.card,.card+.row,.row+.card{margin-top:16px}
+.card-head{font-size:12px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:#888;margin-bottom:14px}
+.row{display:grid;gap:16px}
+.cols-2{grid-template-columns:1fr 1fr}
+.cols-3{grid-template-columns:1fr 1fr 1fr}
+.cols-4{grid-template-columns:repeat(4,1fr)}
+
+/* STAT TILES */
+.stat-tile{background:#fff;border:1px solid #e5e3df;border-radius:8px;padding:16px 20px}
+.stat-num{font-size:26px;font-weight:600;color:#1a1a1a;letter-spacing:-.5px;font-family:'IBM Plex Mono',monospace;line-height:1}
+.stat-label{font-size:11px;color:#999;margin-top:4px}
+.stat-note{font-size:11px;color:#bbb;margin-top:2px}
+
+/* TAGS */
+.tag{display:inline-block;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:500;letter-spacing:.1px}
+.tag-draft{background:#f0ede8;color:#888}
+.tag-pending{background:#fff8e6;color:#b07800}
+.tag-approved{background:#eaf7ef;color:#1a7a40}
+.tag-rejected{background:#fdeaea;color:#c03030}
+.tag-shared{background:#e8eeff;color:#2244cc}
+.tag-done{background:#eaf7ef;color:#1a7a40}
+.tag-track{background:#e8f4ff;color:#1a5fa0}
+.tag-ns{background:#f5f5f5;color:#aaa}
+
+/* PROGRESS */
+.prog-row{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+.prog-row:last-child{margin-bottom:0}
+.prog-label{font-size:12px;color:#777;width:90px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.prog-track{flex:1;height:5px;background:#eeece9;border-radius:10px;overflow:hidden}
+.prog-fill{height:100%;border-radius:10px;transition:width .4s}
+.prog-pct{font-size:11px;font-family:'IBM Plex Mono',monospace;color:#999;width:32px;text-align:right;flex-shrink:0}
+
+/* TABLES */
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{padding:8px 10px;text-align:left;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;color:#aaa;border-bottom:1px solid #eeece9}
+.tbl td{padding:10px 10px;border-bottom:1px solid #f5f3ef;color:#444;vertical-align:middle}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:#faf9f7}
+
+/* GOAL ITEM */
+.goal-item{border:1px solid #eeece9;border-radius:6px;padding:14px 16px;margin-bottom:10px;background:#fff}
+.goal-item:last-child{margin-bottom:0}
+.goal-item.locked{background:#fafaf8;border-color:#e8e6e0}
+.goal-title{font-size:14px;font-weight:500;color:#1a1a1a;margin-bottom:6px}
+.goal-meta-row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:8px}
+.goal-actions{display:flex;gap:6px;margin-top:8px}
+
+/* BUTTONS */
+.btn{padding:6px 14px;border-radius:4px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #ddd;background:#fff;color:#444;font-family:inherit;transition:background .1s,border-color .1s}
+.btn:hover{background:#f8f6f3;border-color:#ccc}
+.btn-primary{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
+.btn-primary:hover{background:#333;border-color:#333}
+.btn-lime{background:#c8f135;color:#1a1a1a;border-color:#b8e020}
+.btn-lime:hover{background:#bde82e}
+.btn-danger{background:#fff;color:#c03030;border-color:#f0c0c0}
+.btn-danger:hover{background:#fdeaea}
+.btn-sm{padding:4px 10px;font-size:11px}
+
+/* FORMS */
+.field{margin-bottom:14px}
+.field label{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:#888;margin-bottom:5px}
+.field input,.field select,.field textarea{width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:4px;font-size:13px;font-family:inherit;color:#1a1a1a;background:#fff;outline:none;transition:border-color .15s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:#1a1a1a}
+.field textarea{resize:vertical;min-height:70px}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+/* MODAL */
+.modal-bg{background:rgba(20,20,20,.55);display:flex;align-items:center;justify-content:center;padding:20px;min-height:500px}
+.modal-box{background:#fff;border-radius:8px;padding:24px;width:100%;max-width:500px;max-height:80vh;overflow-y:auto}
+.modal-title{font-size:15px;font-weight:600;margin-bottom:18px;color:#1a1a1a;letter-spacing:-.2px}
+.modal-footer{display:flex;gap:8px;justify-content:flex-end;margin-top:18px;padding-top:14px;border-top:1px solid #f0ede8}
+
+/* WEIGHT BAR */
+.wbar-wrap{display:flex;height:8px;border-radius:4px;overflow:hidden;gap:2px;margin:8px 0}
+.wbar-seg{height:100%;border-radius:2px}
+.wbar-empty{flex:1;background:#eeece9;border-radius:2px}
+
+/* INSIGHT CARD */
+.insight{background:#f9f8f5;border:1px solid #e8e5df;border-left:3px solid #c8f135;border-radius:0 6px 6px 0;padding:10px 14px;margin-bottom:8px;font-size:12px;color:#555;line-height:1.6}
+.insight:last-child{margin-bottom:0}
+.insight strong{color:#1a1a1a;font-weight:500}
+
+/* TIMELINE */
+.tl{padding-left:20px;position:relative}
+.tl::before{content:'';position:absolute;left:5px;top:4px;bottom:4px;width:1px;background:#e5e3df}
+.tl-row{position:relative;margin-bottom:16px}
+.tl-dot{position:absolute;left:-20px;top:3px;width:11px;height:11px;border-radius:50%;background:#ddd;border:2px solid #fff}
+.tl-dot.done{background:#1a7a40}
+.tl-dot.now{background:#c8f135;border-color:#b8d020}
+.tl-name{font-size:13px;font-weight:500;color:#1a1a1a}
+.tl-date{font-size:11px;color:#aaa}
+.tl-desc{font-size:11px;color:#888;margin-top:1px}
+
+/* AI coach */
+.coach-resp{background:#f9f8f5;border:1px solid #e8e5df;border-radius:6px;padding:14px;font-size:13px;color:#444;line-height:1.7;margin-top:10px}
+.q-btn{width:100%;text-align:left;padding:9px 12px;background:#f9f8f5;border:1px solid #e8e5df;border-radius:4px;font-size:12px;color:#555;cursor:pointer;font-family:inherit;margin-bottom:6px;transition:background .1s;line-height:1.4}
+.q-btn:hover{background:#f0ede8;color:#1a1a1a}
+
+/* heatmap */
+.hmap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.hmap-cell{padding:10px 12px;border-radius:6px;border:1px solid;cursor:pointer;transition:opacity .1s}
+.hmap-cell:hover{opacity:.8}
+.hmap-name{font-size:12px;font-weight:500}
+.hmap-score{font-size:18px;font-weight:600;font-family:'IBM Plex Mono',monospace;margin-top:2px}
+
+/* LOGIN */
+.login-page{min-height:100vh;background:#f4f2ee;display:flex;align-items:center;justify-content:center;padding:20px}
+.login-box{background:#fff;border:1px solid #e5e3df;border-radius:10px;padding:32px;width:100%;max-width:400px}
+.login-logo{font-size:18px;font-weight:600;letter-spacing:-.3px;color:#1a1a1a;margin-bottom:2px}
+.login-logo span{color:#888;font-family:'IBM Plex Mono',monospace;font-weight:400;font-size:14px}
+.login-sub{font-size:12px;color:#999;margin-bottom:24px}
+.role-tabs{display:flex;gap:0;margin-bottom:16px;border:1px solid #e5e3df;border-radius:5px;overflow:hidden}
+.role-tab{flex:1;padding:8px 4px;text-align:center;font-size:12px;font-weight:500;cursor:pointer;background:#fff;color:#888;border:none;font-family:inherit;transition:background .1s}
+.role-tab.on{background:#1a1a1a;color:#fff}
+.user-opt{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border:1px solid #eeece9;border-radius:5px;margin-bottom:6px;cursor:pointer;transition:border-color .1s}
+.user-opt:hover{border-color:#aaa}
+.user-opt-name{font-size:13px;font-weight:500;color:#1a1a1a}
+.user-opt-dept{font-size:11px;color:#aaa}
+.user-opt-arr{font-size:12px;color:#bbb}
+.login-note{font-size:10px;color:#bbb;text-align:center;margin-top:14px}
+
+/* checkin accordion */
+.acc-head{padding:12px 14px;background:#f9f8f5;border-radius:6px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;margin-bottom:2px}
+.acc-body{padding:14px;background:#fff;border:1px solid #eeece9;border-top:none;border-radius:0 0 6px 6px;margin-bottom:10px}
+.acc-body.hidden{display:none}
+
+/* toast */
+.toast-stack{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:8px;z-index:200;pointer-events:none}
+.toast{background:#1a1a1a;color:#fff;padding:10px 16px;border-radius:6px;font-size:12px;font-family:'IBM Plex Sans',sans-serif;display:flex;align-items:center;gap:8px;animation:tslide .25s ease;max-width:280px}
+@keyframes tslide{from{transform:translateY(12px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+.empty{text-align:center;padding:40px 20px;color:#bbb}
+.empty-icon{font-size:28px;margin-bottom:8px}
+.empty-msg{font-size:13px}
+
+.notif-dot{width:6px;height:6px;border-radius:50%;background:#c8f135;display:inline-block;margin-left:4px;vertical-align:middle}
+</style>
+
+<div id="root"></div>
+<div class="toast-stack" id="toasts"></div>
+
+<script>
+const THRUST = ['Revenue Growth','Ops Excellence','Customer Sat.','Innovation','People Dev.','Compliance','Digital Transf.','Cost Optimisation'];
+const UOM = ['Numeric – higher better','Numeric – lower better','Percentage – higher better','Percentage – lower better','Timeline (date)','Zero-target'];
+
+const USERS = [
+  {id:'u1',name:'Rahul Verma',initials:'RV',email:'rahul@nexacorp.in',role:'employee',dept:'Engineering',manager:'u4'},
+  {id:'u2',name:'Sneha Iyer',initials:'SI',email:'sneha@nexacorp.in',role:'employee',dept:'Sales',manager:'u5'},
+  {id:'u3',name:'Dev Anand',initials:'DA',email:'dev@nexacorp.in',role:'employee',dept:'Engineering',manager:'u4'},
+  {id:'u4',name:'Meena Pillai',initials:'MP',email:'meena@nexacorp.in',role:'manager',dept:'Engineering',reports:['u1','u3']},
+  {id:'u5',name:'Ajay Nambiar',initials:'AN',email:'ajay@nexacorp.in',role:'manager',dept:'Sales',reports:['u2']},
+  {id:'u6',name:'Prachi Sood',initials:'PS',email:'prachi@nexacorp.in',role:'admin',dept:'HR'},
+];
+
+const GOALS_SEED = [
+  {id:'g1',uid:'u1',title:'Reduce avg API latency to under 200ms',thrust:'Ops Excellence',uom:'Numeric – lower better',target:200,unit:'ms',wt:30,status:'approved',actual:178,qst:'On Track',updated:'2026-05-01',shared:false},
+  {id:'g2',uid:'u1',title:'Code review coverage across all PRs',thrust:'Ops Excellence',uom:'Percentage – higher better',target:90,unit:'%',wt:25,status:'approved',actual:81,qst:'On Track',updated:'2026-05-08',shared:false},
+  {id:'g3',uid:'u1',title:'Zero P0 bugs in production',thrust:'Compliance',uom:'Zero-target',target:0,unit:'bugs',wt:20,status:'approved',actual:0,qst:'On Track',updated:'2026-05-10',shared:false},
+  {id:'g4',uid:'u1',title:'Ship 3 major features on schedule',thrust:'Innovation',uom:'Timeline (date)',target:'2026-03-31',unit:'',wt:25,status:'approved',actual:'2026-03-28',qst:'Completed',updated:'2026-03-28',shared:false},
+  {id:'g5',uid:'u2',title:'Close ₹50L new revenue this quarter',thrust:'Revenue Growth',uom:'Numeric – higher better',target:5000000,unit:'₹',wt:40,status:'pending',actual:0,qst:'Not Started',updated:null,shared:false},
+  {id:'g6',uid:'u2',title:'Onboard 8 new enterprise clients',thrust:'Revenue Growth',uom:'Numeric – higher better',target:8,unit:'clients',wt:30,status:'pending',actual:0,qst:'Not Started',updated:null,shared:false},
+  {id:'g7',uid:'u2',title:'NPS score above 55',thrust:'Customer Sat.',uom:'Numeric – higher better',target:55,unit:'score',wt:30,status:'pending',actual:0,qst:'Not Started',updated:null,shared:false},
+  {id:'g8',uid:'u3',title:'Deploy 4x per week consistently',thrust:'Innovation',uom:'Numeric – higher better',target:4,unit:'deploys/wk',wt:35,status:'draft',actual:0,qst:'Not Started',updated:null,shared:false},
+  {id:'g9',uid:'u3',title:'MTTR under 30 minutes',thrust:'Ops Excellence',uom:'Numeric – lower better',target:30,unit:'min',wt:35,status:'draft',actual:0,qst:'Not Started',updated:null,shared:false},
+  {id:'g10',uid:'u3',title:'Complete 40hrs internal training',thrust:'People Dev.',uom:'Numeric – higher better',target:40,unit:'hrs',wt:30,status:'draft',actual:0,qst:'Not Started',updated:null,shared:false},
+];
+
+const CHECKINS_SEED = [
+  {id:'c1',gid:'g1',mid:'u4',comment:'Good direction. Keep eye on p99 not just average — spikes still concern me a bit.',date:'2026-05-03',q:'Q1'},
+];
+
+const AUDIT_SEED = [
+  {id:'a1',uid:'u4',action:'Approved — Reduce avg API latency',gid:'g1',date:'2026-03-06',note:'Locked'},
+  {id:'a2',uid:'u4',action:'Approved — Code review coverage',gid:'g2',date:'2026-03-06',note:'Locked'},
+  {id:'a3',uid:'u1',action:'Updated actual: Zero P0 bugs = 0',gid:'g3',date:'2026-05-10',note:'Q1 update'},
+];
+
+let S = {
+  me: null,
+  _loginRole: 'employee',
+  goals: JSON.parse(JSON.stringify(GOALS_SEED)),
+  checkins: JSON.parse(JSON.stringify(CHECKINS_SEED)),
+  audit: JSON.parse(JSON.stringify(AUDIT_SEED)),
+  cycle: {name:'FY 2025–26',phase:'Q1 Check-in',status:'active'},
+  page: 'home',
+  modal: null,
+};
+
+function score(g){
+  if(g.actual===null||g.actual===undefined||g.actual==='') return null;
+  if(g.uom==='Zero-target') return g.actual==0?100:0;
+  if(g.uom==='Timeline (date)'){const t=new Date(g.target),a=new Date(g.actual);return a<=t?100:Math.max(0,100-Math.round((a-t)/(864e5)*4))}
+  if(g.uom.includes('higher')) return Math.min(100,Math.round(g.actual/g.target*100));
+  if(g.uom.includes('lower')) return g.actual==0?100:Math.min(100,Math.round(g.target/g.actual*100));
+  return null;
+}
+
+function weightSum(uid){return S.goals.filter(g=>g.uid===uid).reduce((s,g)=>s+g.wt,0)}
+
+function overallScore(uid){
+  const gs=S.goals.filter(g=>g.uid===uid&&g.status==='approved');
+  if(!gs.length) return 0;
+  const num=gs.reduce((s,g)=>{const sc=score(g);return sc!=null?s+sc*g.wt:s},0);
+  const den=gs.reduce((s,g)=>{const sc=score(g);return sc!=null?s+g.wt:s},0);
+  return den?Math.round(num/den):0;
+}
+
+function band(s){
+  if(s>=85) return {label:'Excellent',col:'#1a7a40',bg:'#eaf7ef'};
+  if(s>=70) return {label:'Good',col:'#1a5fa0',bg:'#e8f4ff'};
+  if(s>=50) return {label:'Moderate',col:'#b07800',bg:'#fff8e6'};
+  return {label:'At Risk',col:'#c03030',bg:'#fdeaea'};
+}
+
+function pcolor(s){
+  if(s>=75) return '#2a9d5c';
+  if(s>=50) return '#e09000';
+  return '#d04040';
+}
+
+function audit(action,gid,note=''){
+  S.audit.unshift({id:'a'+Date.now(),uid:S.me.id,action,gid,date:new Date().toISOString().slice(0,10),note});
+}
+
+function toast(msg){
+  const d=document.createElement('div');
+  d.className='toast';
+  d.textContent=msg;
+  document.getElementById('toasts').appendChild(d);
+  setTimeout(()=>d.remove(),3000);
+}
+
+// ── RENDER ──────────────────────────────────────────────────
+function R(){
+  document.getElementById('root').innerHTML = S.me ? renderApp() : renderLogin();
+  bind();
+}
+
+// ── LOGIN ────────────────────────────────────────────────────
+function renderLogin(){
+  const roles=['employee','manager','admin'];
+  const sel=S._loginRole;
+  const list=USERS.filter(u=>u.role===sel);
+  return `<div class="login-page">
+    <div class="login-box">
+      <div class="login-logo">NexaGoals <span>by NexaCorp</span></div>
+      <div class="login-sub">Goal tracking for teams that actually care about outcomes.</div>
+      <div class="role-tabs">
+        ${roles.map(r=>`<button class="role-tab${sel===r?' on':''}" onclick="setRole('${r}')">${r[0].toUpperCase()+r.slice(1)}</button>`).join('')}
+      </div>
+      ${list.map(u=>`
+        <div class="user-opt" onclick="login('${u.id}')">
+          <div><div class="user-opt-name">${u.name}</div><div class="user-opt-dept">${u.dept}</div></div>
+          <span class="user-opt-arr">→</span>
+        </div>`).join('')}
+      <div class="login-note">Hackathon demo — pick any account to explore</div>
+    </div>
+  </div>`;
+}
+
+window.setRole=r=>{S._loginRole=r;R()};
+window.login=id=>{S.me=USERS.find(u=>u.id===id);S.page='home';R()};
+
+// ── APP SHELL ────────────────────────────────────────────────
+function renderApp(){
+  const u=S.me;
+  const nav=getNav(u.role);
+  const pendingCount=u.role==='manager'?S.goals.filter(g=>S.goals.find(x=>x.id===g.id)&&g.status==='pending'&&getReports(u).some(r=>r.id===g.uid)).length:0;
+  return `<div class="app-shell">
+    <div class="sidebar">
+      <div class="sidebar-top">
+        <div class="wordmark">Nexa<span>Goals</span></div>
+        <div class="org-name">NexaCorp · ${S.cycle.name}</div>
+      </div>
+      <div class="sidebar-nav">
+        ${nav.map(n=>`<div class="nav-link${S.page===n.id?' on':''}" onclick="go('${n.id}')">${n.icon} ${n.label}${n.id==='approvals'&&pendingCount?`<span class="notif-dot"></span>`:''}</div>`).join('')}
+      </div>
+      <div class="sidebar-bottom">
+        <div class="user-row">
+          <div class="avatar-sm">${u.initials}</div>
+          <div><div class="user-name">${u.name.split(' ')[0]}</div><div class="user-role">${u.role}</div></div>
+        </div>
+        <button class="btn-signout" onclick="logout()">sign out</button>
+      </div>
+    </div>
+    <div class="main">
+      <div class="page-wrap">${renderPage()}</div>
+    </div>
+  </div>
+  ${S.modal?renderModal():''}`;
+}
+
+function getReports(u){return USERS.filter(x=>u.reports&&u.reports.includes(x.id))}
+function getNav(r){
+  if(r==='employee') return [
+    {id:'home',icon:'⌂',label:'Home'},
+    {id:'goals',icon:'◎',label:'My goals'},
+    {id:'checkin',icon:'↺',label:'Check-in'},
+    {id:'coach',icon:'◆',label:'Insights'},
+    {id:'timeline',icon:'—',label:'Calendar'},
+  ];
+  if(r==='manager') return [
+    {id:'home',icon:'⌂',label:'Home'},
+    {id:'team',icon:'◉',label:'My team'},
+    {id:'approvals',icon:'✓',label:'Approvals'},
+    {id:'mgr_checkin',icon:'↺',label:'Check-ins'},
+    {id:'shared',icon:'⊕',label:'Push goals'},
+    {id:'reports',icon:'≡',label:'Reports'},
+  ];
+  return [
+    {id:'home',icon:'⌂',label:'Home'},
+    {id:'org',icon:'◉',label:'Org view'},
+    {id:'cycle',icon:'⚙',label:'Cycle'},
+    {id:'audit',icon:'✦',label:'Audit log'},
+    {id:'reports',icon:'≡',label:'Reports'},
+  ];
+}
+
+window.go=p=>{S.page=p;S.modal=null;R()};
+window.logout=()=>{S.me=null;R()};
+
+function renderPage(){
+  const p=S.page,r=S.me.role;
+  if(p==='home') return r==='employee'?pgEmpHome():r==='manager'?pgMgrHome():pgAdminHome();
+  if(p==='goals') return pgGoals();
+  if(p==='checkin') return pgCheckin();
+  if(p==='coach') return pgCoach();
+  if(p==='timeline') return pgTimeline();
+  if(p==='team') return pgTeam();
+  if(p==='approvals') return pgApprovals();
+  if(p==='mgr_checkin') return pgMgrCheckin();
+  if(p==='shared') return pgShared();
+  if(p==='reports') return pgReports();
+  if(p==='org') return pgOrg();
+  if(p==='cycle') return pgCycle();
+  if(p==='audit') return pgAudit();
+  return '<div>Not found</div>';
+}
+
+// ── EMPLOYEE HOME ─────────────────────────────────────────────
+function pgEmpHome(){
+  const u=S.me;
+  const gs=S.goals.filter(g=>g.uid===u.id);
+  const approved=gs.filter(g=>g.status==='approved');
+  const os=overallScore(u.id);
+  const b=band(os);
+  const wt=weightSum(u.id);
+  const insights=genInsights(u.id);
+  return `
+  <div class="pg-title">Good morning, ${u.name.split(' ')[0]}</div>
+  <div class="pg-sub">${S.cycle.phase} · FY 2025–26</div>
+  <div class="row cols-4">
+    <div class="stat-tile">
+      <div class="stat-num" style="color:${b.col}">${os}%</div>
+      <div class="stat-label">Overall score</div>
+      <div class="stat-note" style="color:${b.col}">${b.label}</div>
+    </div>
+    <div class="stat-tile">
+      <div class="stat-num">${gs.length}</div>
+      <div class="stat-label">Goals set</div>
+      <div class="stat-note">of 8 max</div>
+    </div>
+    <div class="stat-tile">
+      <div class="stat-num">${approved.length}</div>
+      <div class="stat-label">Approved</div>
+      <div class="stat-note">locked by manager</div>
+    </div>
+    <div class="stat-tile">
+      <div class="stat-num" style="color:${wt===100?'#1a7a40':wt>100?'#c03030':'#b07800'}">${wt}%</div>
+      <div class="stat-label">Weightage total</div>
+      <div class="stat-note">${wt===100?'exactly 100 ✓':wt>100?'over 100!':'needs to reach 100'}</div>
+    </div>
+  </div>
+  <div class="row cols-2" style="margin-top:16px">
+    <div class="card">
+      <div class="card-head">Goal progress</div>
+      ${approved.length?approved.map(g=>{
+        const s=score(g)||0;
+        return `<div class="prog-row">
+          <div class="prog-label" title="${g.title}">${g.title.slice(0,14)}…</div>
+          <div class="prog-track"><div class="prog-fill" style="width:${s}%;background:${pcolor(s)}"></div></div>
+          <div class="prog-pct">${s}%</div>
+        </div>`;
+      }).join(''):`<div class="empty"><div class="empty-msg">No approved goals yet</div></div>`}
+      ${gs.some(g=>g.status==='draft')?`<hr class="divider" style="margin:12px 0 10px"><div><span class="tag tag-draft">${gs.filter(g=>g.status==='draft').length} draft(s) not submitted</span></div>`:''}
+    </div>
+    <div class="card">
+      <div class="card-head">What the system sees</div>
+      ${insights.map(i=>`<div class="insight">${i}</div>`).join('')}
+      <div style="margin-top:10px"><button class="btn btn-sm" onclick="go('coach')">Full insights →</button></div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <div class="card-head">Weight distribution</div>
+    <div class="wbar-wrap">
+      ${approved.map((g,i)=>{const colors=['#1a1a1a','#c8f135','#888','#ddd','#555','#bbb','#333','#eee'];return `<div class="wbar-seg" style="width:${g.wt}%;background:${colors[i%colors.length]}" title="${g.title} — ${g.wt}%"></div>`}).join('')}
+      ${wt<100?`<div class="wbar-empty"></div>`:''}
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px">
+      ${approved.map((g,i)=>{const colors=['#1a1a1a','#c8f135','#888','#ddd','#555','#bbb','#333','#eee'];return `<span style="font-size:11px;color:#888"><span style="display:inline-block;width:7px;height:7px;background:${colors[i%colors.length]};margin-right:4px;vertical-align:middle;border-radius:1px"></span>${g.title.slice(0,20)} (${g.wt}%)</span>`}).join('')}
+    </div>
+  </div>`;
+}
+
+function genInsights(uid){
+  const gs=S.goals.filter(g=>g.uid===uid&&g.status==='approved');
+  const out=[];
+  gs.forEach(g=>{
+    const s=score(g);
+    if(s!==null&&s<60) out.push(`<strong>${g.title.slice(0,30)}</strong> is at ${s}% — recovery plan needed before Q2 window.`);
+    if(s===100) out.push(`<strong>${g.title.slice(0,30)}</strong> is at 100% — ask your manager about stretch targets.`);
+    if(g.qst==='Not Started') out.push(`<strong>${g.title.slice(0,30)}</strong> has no actuals logged yet.`);
+  });
+  if(!out.length) out.push('All active goals are progressing. Good to go for Q1 check-in.');
+  return out.slice(0,3);
+}
+
+// ── MANAGER HOME ──────────────────────────────────────────────
+function pgMgrHome(){
+  const u=S.me;
+  const reps=getReports(u);
+  const pending=S.goals.filter(g=>reps.some(r=>r.id===g.uid)&&g.status==='pending');
+  const avgScore=Math.round(reps.reduce((s,r)=>s+overallScore(r.id),0)/Math.max(reps.length,1));
+  return `
+  <div class="pg-title">${u.name.split(' ')[0]}'s dashboard</div>
+  <div class="pg-sub">${reps.length} direct reports · ${S.cycle.phase}</div>
+  <div class="row cols-4">
+    <div class="stat-tile"><div class="stat-num">${reps.length}</div><div class="stat-label">Direct reports</div></div>
+    <div class="stat-tile"><div class="stat-num" style="color:${pending.length?'#b07800':'#1a7a40'}">${pending.length}</div><div class="stat-label">Pending approvals</div></div>
+    <div class="stat-tile"><div class="stat-num">${avgScore}%</div><div class="stat-label">Team avg score</div></div>
+    <div class="stat-tile"><div class="stat-num">${S.checkins.filter(c=>S.goals.some(g=>reps.some(r=>r.id===g.uid)&&g.id===c.gid)).length}</div><div class="stat-label">Check-ins logged</div></div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <div class="card-head">Team snapshot</div>
+    <table class="tbl">
+      <thead><tr><th>Name</th><th>Goals</th><th>Score</th><th>Pending?</th><th></th></tr></thead>
+      <tbody>
+        ${reps.map(r=>{
+          const gs=S.goals.filter(g=>g.uid===r.id);
+          const os=overallScore(r.id);
+          const b=band(os);
+          const hasPending=gs.some(g=>g.status==='pending');
+          return `<tr>
+            <td><strong>${r.name}</strong><br><span style="font-size:11px;color:#aaa">${r.dept}</span></td>
+            <td>${gs.filter(g=>g.status==='approved').length} / ${gs.length}</td>
+            <td><span class="tag" style="background:${b.bg};color:${b.col}">${os}%</span></td>
+            <td>${hasPending?`<span class="tag tag-pending">Needs review</span>`:`<span class="tag tag-approved">Up to date</span>`}</td>
+            <td><button class="btn btn-sm" onclick="go('team')">View</button></td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table>
+  </div>
+  ${pending.length?`<div class="card" style="margin-top:16px;border-color:#f0d080">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <div><div style="font-size:13px;font-weight:500;color:#1a1a1a">${pending.length} goal(s) waiting for your approval</div><div style="font-size:11px;color:#aaa;margin-top:2px">Review and approve or return with comments</div></div>
+      <button class="btn btn-primary btn-sm" onclick="go('approvals')">Review now →</button>
+    </div>
+  </div>`:''}`;
+}
+
+// ── ADMIN HOME ────────────────────────────────────────────────
+function pgAdminHome(){
+  const emps=USERS.filter(u=>u.role==='employee');
+  const os=overallScore;
+  return `
+  <div class="pg-title">Org overview</div>
+  <div class="pg-sub">${S.cycle.name} · ${S.cycle.phase} · Cycle <span class="tag tag-approved" style="font-size:11px">${S.cycle.status}</span></div>
+  <div class="row cols-4">
+    <div class="stat-tile"><div class="stat-num">${emps.length}</div><div class="stat-label">Employees tracked</div></div>
+    <div class="stat-tile"><div class="stat-num">${S.goals.length}</div><div class="stat-label">Goals total</div><div class="stat-note">${S.goals.filter(g=>g.status==='approved').length} approved</div></div>
+    <div class="stat-tile"><div class="stat-num">${emps.filter(e=>os(e.id)>=70).length}</div><div class="stat-label">On track (≥70%)</div></div>
+    <div class="stat-tile"><div class="stat-num">${S.audit.length}</div><div class="stat-label">Audit events</div></div>
+  </div>
+  <div class="row cols-2" style="margin-top:16px">
+    <div class="card">
+      <div class="card-head">Performance heatmap</div>
+      <div class="hmap-grid">
+        ${emps.map(e=>{
+          const s=os(e.id);const b=band(s);
+          return `<div class="hmap-cell" style="background:${b.bg};border-color:${b.col}33" onclick="showEmp('${e.id}')">
+            <div class="hmap-name" style="color:${b.col}">${e.name.split(' ')[0]}</div>
+            <div class="hmap-score" style="color:${b.col}">${s}%</div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">Status breakdown</div>
+      ${['approved','pending','draft'].map(st=>{
+        const n=S.goals.filter(g=>g.status===st).length;
+        const p=Math.round(n/Math.max(S.goals.length,1)*100);
+        const c=st==='approved'?'#2a9d5c':st==='pending'?'#e09000':'#aaa';
+        return `<div style="margin-bottom:10px">
+          <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px;color:#888">
+            <span>${st}</span><span style="color:${c};font-family:'IBM Plex Mono',monospace">${n} (${p}%)</span>
+          </div>
+          <div class="prog-track" style="height:6px"><div class="prog-fill" style="width:${p}%;background:${c}"></div></div>
+        </div>`;
+      }).join('')}
+    </div>
+  </div>`;
+}
+
+window.showEmp=uid=>{
+  const u=USERS.find(x=>x.id===uid);
+  const gs=S.goals.filter(g=>g.uid===uid);
+  S.modal={type:'emp_detail',u,gs};R();
+};
+
+// ── EMPLOYEE: GOALS ───────────────────────────────────────────
+function pgGoals(){
+  const u=S.me;
+  const gs=S.goals.filter(g=>g.uid===u.id);
+  const wt=weightSum(u.id);
+  const canAdd=gs.length<8;
+  return `
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:6px">
+    <div>
+      <div class="pg-title">My goals</div>
+      <div class="pg-sub">Weightage total: <strong style="color:${wt===100?'#1a7a40':wt>100?'#c03030':'#b07800'}">${wt}%</strong> ${wt===100?'✓':wt>100?'— over limit':'— must reach 100'}</div>
+    </div>
+    <div style="display:flex;gap:8px;padding-top:4px">
+      ${canAdd?`<button class="btn btn-primary btn-sm" onclick="openModal('add_goal')">+ Add goal</button>`:`<span class="tag tag-ns" style="padding:4px 8px">8 goal limit reached</span>`}
+      ${gs.some(g=>g.status==='draft')?`<button class="btn btn-lime btn-sm" onclick="submitAll()">Submit all drafts</button>`:''}
+    </div>
+  </div>
+  ${!gs.length?`<div class="empty"><div class="empty-icon">◎</div><div class="empty-msg">No goals yet. Add your first one.</div></div>`:''}
+  ${gs.map(g=>{
+    const s=score(g);
+    const stag=`tag-${g.status==='approved'?'approved':g.status==='pending'?'pending':g.status==='rejected'?'rejected':'draft'}`;
+    return `<div class="goal-item${g.status==='approved'?' locked':''}">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div style="flex:1">
+          <div class="goal-title">${g.title} ${g.shared?`<span class="tag tag-shared">shared</span>`:''}</div>
+          <div class="goal-meta-row">
+            <span class="tag ${stag}">${g.status}</span>
+            <span class="tag tag-ns">${g.thrust}</span>
+            <span class="tag tag-ns">${g.uom}</span>
+            <span style="font-size:11px;color:#aaa">wt: ${g.wt}%</span>
+            <span style="font-size:11px;color:#aaa">target: ${g.target} ${g.unit}</span>
+          </div>
+          ${g.status==='approved'&&s!==null?`
+            <div class="prog-row" style="margin-top:6px">
+              <div class="prog-label" style="font-size:11px;color:#999">actual: ${g.actual} ${g.unit}</div>
+              <div class="prog-track"><div class="prog-fill" style="width:${s}%;background:${pcolor(s)}"></div></div>
+              <div class="prog-pct" style="color:${pcolor(s)}">${s}%</div>
+            </div>
+            <div style="margin-top:4px;display:flex;gap:6px">
+              <span class="tag ${g.qst==='Completed'?'tag-done':g.qst==='On Track'?'tag-track':'tag-ns'}">${g.qst}</span>
+              ${g.updated?`<span style="font-size:10px;color:#ccc">updated ${g.updated}</span>`:''}
+            </div>
+          `:''}
+        </div>
+        <div style="display:flex;gap:5px;flex-shrink:0;padding-left:12px">
+          ${g.status==='draft'?`<button class="btn btn-sm" onclick="openModal('edit_goal','${g.id}')">edit</button><button class="btn btn-lime btn-sm" onclick="submitOne('${g.id}')">submit</button>`:''}
+          ${g.status==='approved'?`<button class="btn btn-sm btn-primary" onclick="openModal('update_ach','${g.id}')">update</button>`:''}
+          ${g.status==='rejected'?`<button class="btn btn-sm" onclick="openModal('edit_goal','${g.id}')">revise</button>`:''}
+        </div>
+      </div>
+    </div>`;
+  }).join('')}`;
+}
+
+window.submitOne=id=>{
+  const g=S.goals.find(x=>x.id===id);
+  const wt=weightSum(S.me.id);
+  if(wt!==100){toast('Total weightage must be exactly 100% before submitting.');return;}
+  g.status='pending';audit('Submitted: '+g.title,id);toast('Goal submitted for approval.');R();
+};
+window.submitAll=()=>{
+  const wt=weightSum(S.me.id);
+  if(wt!==100){toast('Total weightage must be exactly 100% first.');return;}
+  const ds=S.goals.filter(g=>g.uid===S.me.id&&g.status==='draft');
+  ds.forEach(g=>{g.status='pending';audit('Submitted: '+g.title,g.id)});
+  toast(`${ds.length} goal(s) submitted.`);R();
+};
+
+// ── EMPLOYEE: CHECK-IN ────────────────────────────────────────
+function pgCheckin(){
+  const gs=S.goals.filter(g=>g.uid===S.me.id&&g.status==='approved');
+  return `
+  <div class="pg-title">Q1 check-in</div>
+  <div class="pg-sub">Log your actual progress against each goal for this quarter</div>
+  ${!gs.length?`<div class="empty"><div class="empty-icon">↺</div><div class="empty-msg">No approved goals to check in on.</div></div>`:''}
+  ${gs.map(g=>{
+    const s=score(g);
+    const cins=S.checkins.filter(c=>c.gid===g.id);
+    return `<div>
+      <div class="acc-head" onclick="toggleAcc('acc_${g.id}')">
+        <div>
+          <span style="font-size:13px;font-weight:500">${g.title}</span>
+          <span style="margin-left:8px" class="tag ${g.qst==='Completed'?'tag-done':g.qst==='On Track'?'tag-track':'tag-ns'}">${g.qst}</span>
+          ${s!==null?`<span style="margin-left:6px" class="tag" style="background:#f0f0f0;color:#999">${s}%</span>`:''}
+        </div>
+        <span style="color:#bbb;font-size:11px">▾</span>
+      </div>
+      <div class="acc-body hidden" id="acc_${g.id}">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+          <div><div style="font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#aaa;margin-bottom:3px">Target</div><div style="font-size:16px;font-weight:500;font-family:'IBM Plex Mono',monospace">${g.target} ${g.unit}</div></div>
+          <div><div style="font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#aaa;margin-bottom:3px">Your actual</div><div style="font-size:16px;font-weight:500;font-family:'IBM Plex Mono',monospace;color:${pcolor(s||0)}">${g.actual||'—'} ${g.actual?g.unit:''}</div></div>
+        </div>
+        <button class="btn btn-sm btn-primary" onclick="openModal('update_ach','${g.id}')">Update achievement</button>
+        ${cins.length?`<hr class="divider"><div style="font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#bbb;margin-bottom:8px">Manager notes</div>${cins.map(c=>`<div style="font-size:12px;color:#555;padding:8px 10px;background:#f9f8f5;border-radius:4px;border-left:2px solid #ddd;margin-bottom:6px">"${c.comment}"<span style="display:block;font-size:10px;color:#bbb;margin-top:3px">${c.date}</span></div>`).join('')}`:''}
+      </div>
+    </div>`;
+  }).join('')}`;
+}
+
+window.toggleAcc=id=>{const el=document.getElementById(id);if(el)el.classList.toggle('hidden')};
+
+// ── COACH ─────────────────────────────────────────────────────
+function pgCoach(){
+  const u=S.me;
+  const gs=S.goals.filter(g=>g.uid===u.id&&g.status==='approved');
+  const os=overallScore(u.id);
+  const qs=[
+    ['How do I improve?','Focus on goals below 70%. Set a weekly mini-target and update actuals every Friday. Early momentum compounds.'],
+    ['Am I on track?',`At ${os}%, ${os>=70?'you\'re in good shape for a strong annual review. Maintain consistency.':'there\'s room to improve. Prioritize at-risk goals and loop in your manager early.'}`],
+    ['What if I miss a goal?','Talk to your manager before the Q2 window. Targets can be revised by admin for justified reasons — don\'t wait until the annual review.'],
+    ['How is my score calculated?','Weighted average: each goal\'s score × its weightage, divided by total weightage. Timeline and Zero-target goals use special formulas.'],
+  ];
+  return `
+  <div class="pg-title">Performance insights</div>
+  <div class="pg-sub">System-generated analysis based on your goal data</div>
+  <div class="row cols-2">
+    <div class="card">
+      <div class="card-head">Goal-by-goal scores</div>
+      ${gs.length?gs.map((g,i)=>{
+        const s=score(g)||0;
+        const colors=['#1a1a1a','#c8f135','#888','#555','#bbb'];
+        return `<div class="prog-row">
+          <div class="prog-label" title="${g.title}">${g.title.slice(0,16)}</div>
+          <div class="prog-track"><div class="prog-fill" style="width:${s}%;background:${colors[i%colors.length]}"></div></div>
+          <div class="prog-pct" style="color:${pcolor(s)}">${s}%</div>
+        </div>`;
+      }).join(''):`<div class="empty"><div class="empty-msg">Approve goals to see scores</div></div>`}
+    </div>
+    <div class="card">
+      <div class="card-head">What the system recommends</div>
+      ${genInsights(u.id).map(i=>`<div class="insight">${i}</div>`).join('')}
+      <div class="insight" style="border-left-color:#888;margin-top:6px">Year-end projection: <strong>${Math.min(100,os+6)}–${Math.min(100,os+14)}%</strong> based on current trajectory.</div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <div class="card-head">Ask a question</div>
+    <div id="coach-qs">
+      ${qs.map((q,i)=>`<button class="q-btn" onclick="showQ(${i})">${q[0]}</button>`).join('')}
+    </div>
+    <div id="coach-ans" style="display:none" class="coach-resp"></div>
+  </div>`;
+}
+
+window.showQ=i=>{
+  const qs=[
+    ['How do I improve?','Focus on goals below 70%. Set a weekly mini-target and update actuals every Friday. Early momentum compounds.'],
+    ['Am I on track?',`Review each goal individually. For Timeline goals, check the completion date. For Numeric goals, compare your actual against target percentage.`],
+    ['What if I miss a goal?','Talk to your manager before the Q2 window. Targets can be revised by admin for justified reasons — don\'t wait until the annual review.'],
+    ['How is my score calculated?','Weighted average: each goal\'s score × its weightage, divided by total weightage. Timeline and Zero-target goals use special formulas.'],
+  ];
+  const el=document.getElementById('coach-ans');
+  if(el){el.style.display='block';el.textContent=qs[i][1];}
+};
+
+// ── TIMELINE ──────────────────────────────────────────────────
+function pgTimeline(){
+  const items=[
+    {done:true,now:false,name:'Goal setting window',date:'May 1, 2026',desc:'Create, submit and get goals approved'},
+    {done:false,now:true,name:'Q1 check-in',date:'July 2026',desc:'Log actuals, manager adds check-in comment'},
+    {done:false,now:false,name:'Q2 check-in',date:'October 2026',desc:'Progress update — planned vs actual'},
+    {done:false,now:false,name:'Q3 check-in',date:'January 2027',desc:'Progress update — planned vs actual'},
+    {done:false,now:false,name:'Annual review',date:'March – April 2027',desc:'Final achievement capture and scoring'},
+  ];
+  return `
+  <div class="pg-title">Cycle calendar</div>
+  <div class="pg-sub">FY 2025–26 check-in windows</div>
+  <div class="card" style="max-width:520px">
+    <div class="tl">
+      ${items.map(it=>`<div class="tl-row">
+        <div class="tl-dot${it.done?' done':it.now?' now':''}"></div>
+        <div class="tl-name">${it.name} ${it.done?`<span class="tag tag-approved" style="font-size:10px">done</span>`:it.now?`<span class="tag tag-track" style="font-size:10px">current</span>`:''}</div>
+        <div class="tl-date">${it.date}</div>
+        <div class="tl-desc">${it.desc}</div>
+      </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+// ── MANAGER: TEAM ─────────────────────────────────────────────
+function pgTeam(){
+  const reps=getReports(S.me);
+  return `
+  <div class="pg-title">My team</div>
+  <div class="pg-sub">Full goal detail for ${reps.length} direct reports</div>
+  ${reps.map(r=>{
+    const gs=S.goals.filter(g=>g.uid===r.id);
+    const os=overallScore(r.id);
+    const b=band(os);
+    return `<div class="card" style="margin-bottom:16px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="avatar-sm" style="background:#f0ede8;color:#888">${r.initials}</div>
+          <div><div style="font-weight:600;font-size:14px">${r.name}</div><div style="font-size:11px;color:#aaa">${r.dept}</div></div>
+        </div>
+        <span class="tag" style="background:${b.bg};color:${b.col}">${os}% — ${b.label}</span>
+      </div>
+      <table class="tbl">
+        <thead><tr><th>Goal</th><th>Weight</th><th>Target</th><th>Actual</th><th>Score</th><th>Status</th></tr></thead>
+        <tbody>
+          ${gs.map(g=>{
+            const s=score(g);
+            return `<tr>
+              <td style="max-width:180px"><span style="font-size:12px">${g.title}</span></td>
+              <td>${g.wt}%</td>
+              <td style="font-family:'IBM Plex Mono',monospace;font-size:12px">${g.target} ${g.unit}</td>
+              <td style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:${s!==null?pcolor(s):'#ccc'}">${g.actual||'—'}</td>
+              <td>${s!==null?`<span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:${pcolor(s)}">${s}%</span>`:'—'}</td>
+              <td><span class="tag tag-${g.status==='approved'?'approved':g.status==='pending'?'pending':'draft'}">${g.status}</span></td>
+            </tr>`;
+          }).join('')}
+        </tbody>
+      </table>
+    </div>`;
+  }).join('')}`;
+}
+
+// ── MANAGER: APPROVALS ────────────────────────────────────────
+function pgApprovals(){
+  const reps=getReports(S.me);
+  const pending=S.goals.filter(g=>reps.some(r=>r.id===g.uid)&&g.status==='pending');
+  return `
+  <div class="pg-title">Approvals</div>
+  <div class="pg-sub">${pending.length} goal(s) awaiting review</div>
+  ${!pending.length?`<div class="empty" style="padding:60px"><div class="empty-icon">✓</div><div class="empty-msg">Nothing to review right now.</div></div>`:''}
+  ${pending.map(g=>{
+    const emp=USERS.find(u=>u.id===g.uid);
+    return `<div class="goal-item">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between">
+        <div>
+          <div class="goal-title">${g.title}</div>
+          <div class="goal-meta-row">
+            <span class="tag tag-pending">pending</span>
+            <span style="font-size:11px;color:#999">by ${emp?.name}</span>
+            <span class="tag tag-ns">${g.thrust}</span>
+            <span style="font-size:11px;color:#aaa">wt: ${g.wt}%</span>
+            <span style="font-size:11px;color:#aaa">target: ${g.target} ${g.unit}</span>
+          </div>
+        </div>
+        <div style="display:flex;gap:6px;flex-shrink:0">
+          <button class="btn btn-sm" style="color:#1a7a40;border-color:#b8dfc8" onclick="approvGoal('${g.id}')">Approve</button>
+          <button class="btn btn-sm" onclick="openModal('mgr_edit','${g.id}')">Edit & approve</button>
+          <button class="btn btn-sm btn-danger" onclick="rejectGoal('${g.id}')">Return</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('')}`;
+}
+
+window.approvGoal=id=>{
+  const g=S.goals.find(x=>x.id===id);
+  g.status='approved';audit('Approved: '+g.title,id,'Locked');
+  toast('Goal approved and locked.');R();
+};
+window.rejectGoal=id=>{
+  const g=S.goals.find(x=>x.id===id);
+  g.status='rejected';audit('Returned: '+g.title,id,'Changes requested');
+  toast('Goal returned for revision.');R();
+};
+
+// ── MANAGER: CHECK-INS ────────────────────────────────────────
+function pgMgrCheckin(){
+  const reps=getReports(S.me);
+  return `
+  <div class="pg-title">Team check-ins</div>
+  <div class="pg-sub">Add structured feedback for each team member's goals</div>
+  ${reps.map(r=>{
+    const gs=S.goals.filter(g=>g.uid===r.id&&g.status==='approved');
+    return `<div class="card" style="margin-bottom:14px">
+      <div class="card-head">${r.name}</div>
+      ${gs.map(g=>{
+        const s=score(g);
+        const ec=S.checkins.filter(c=>c.gid===g.id&&c.mid===S.me.id);
+        return `<div style="padding:10px;border:1px solid #f0ede8;border-radius:5px;margin-bottom:8px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <span style="font-size:13px;font-weight:500">${g.title}</span>
+            ${s!==null?`<span style="font-size:12px;font-family:'IBM Plex Mono',monospace;color:${pcolor(s)}">${s}%</span>`:''}
+          </div>
+          <div style="font-size:11px;color:#aaa;margin-bottom:8px">Actual: ${g.actual||0} ${g.unit} / Target: ${g.target} ${g.unit}</div>
+          ${ec.map(c=>`<div style="font-size:11px;color:#666;background:#f9f8f5;border-left:2px solid #ddd;padding:6px 8px;border-radius:0 4px 4px 0;margin-bottom:6px">"${c.comment}" <span style="color:#ccc">— ${c.date}</span></div>`).join('')}
+          <button class="btn btn-sm" onclick="openModal('add_checkin','${g.id}','${r.id}')">+ Add check-in note</button>
+        </div>`;
+      }).join('')}
+    </div>`;
+  }).join('')}`;
+}
+
+// ── MANAGER: SHARED GOALS ─────────────────────────────────────
+function pgShared(){
+  const reps=getReports(S.me);
+  return `
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:6px">
+    <div><div class="pg-title">Push goals to team</div><div class="pg-sub">Shared departmental KPIs — title and target are read-only for recipients</div></div>
+    <button class="btn btn-primary btn-sm" style="margin-top:4px" onclick="openModal('push_goal')">+ Push a goal</button>
+  </div>
+  <div class="card">
+    <div style="font-size:12px;color:#888;line-height:1.7;margin-bottom:14px">When you push a shared goal, every selected team member gets it added to their goal sheet. They can only adjust their weightage — the title, UoM and target are locked. Any achievement you log as owner syncs to all copies.</div>
+    <div><div class="card-head">Your team</div>
+    ${reps.map(r=>`<div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid #f5f3ef">
+      <div class="avatar-sm" style="background:#f0ede8;color:#888;width:24px;height:24px;font-size:10px">${r.initials}</div>
+      <span style="font-size:13px">${r.name}</span>
+      <span style="font-size:11px;color:#bbb">${r.dept}</span>
+    </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+// ── ADMIN: ORG ────────────────────────────────────────────────
+function pgOrg(){
+  const mgrs=USERS.filter(u=>u.role==='manager');
+  return `
+  <div class="pg-title">Org hierarchy</div>
+  <div class="pg-sub">Reporting structure and goal completion</div>
+  ${mgrs.map(m=>{
+    const reps=USERS.filter(u=>m.reports&&m.reports.includes(u.id));
+    return `<div class="card" style="margin-bottom:14px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <div class="avatar-sm" style="background:#1a1a1a;color:#c8f135">${m.initials}</div>
+        <div><div style="font-weight:600;font-size:14px">${m.name}</div><div style="font-size:11px;color:#aaa">Manager · ${m.dept}</div></div>
+      </div>
+      <div style="padding-left:24px;border-left:1px solid #e5e3df">
+        ${reps.map(r=>{
+          const s=overallScore(r.id);const b=band(s);
+          return `<div style="display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-radius:5px;background:#f9f8f5;margin-bottom:6px">
+            <div style="font-size:13px">${r.name} <span style="color:#bbb;font-size:11px">· ${r.dept}</span></div>
+            <span class="tag" style="background:${b.bg};color:${b.col}">${s}%</span>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  }).join('')}`;
+}
+
+// ── ADMIN: CYCLE ──────────────────────────────────────────────
+function pgCycle(){
+  return `
+  <div class="pg-title">Cycle management</div>
+  <div class="pg-sub">Configure the goal-setting cycle and check-in windows</div>
+  <div class="card" style="max-width:500px">
+    <div class="card-head">Current cycle</div>
+    <div class="field"><label>Cycle name</label><input id="cyc-name" value="${S.cycle.name}"></div>
+    <div class="field"><label>Status</label><select id="cyc-status"><option ${S.cycle.status==='active'?'selected':''}>active</option><option ${S.cycle.status==='closed'?'selected':''}>closed</option><option ${S.cycle.status==='draft'?'selected':''}>draft</option></select></div>
+    <button class="btn btn-primary btn-sm" onclick="saveCycle()">Save</button>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <div class="card-head">Check-in windows</div>
+    <table class="tbl">
+      <thead><tr><th>Phase</th><th>Opens</th><th>Action</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>Goal setting</td><td>1 May 2026</td><td>Create, submit & approve goals</td><td><span class="tag tag-approved">done</span></td></tr>
+        <tr><td>Q1 check-in</td><td>July 2026</td><td>Planned vs actual update</td><td><span class="tag tag-track">current</span></td></tr>
+        <tr><td>Q2 check-in</td><td>October 2026</td><td>Planned vs actual update</td><td><span class="tag tag-ns">upcoming</span></td></tr>
+        <tr><td>Q3 check-in</td><td>January 2027</td><td>Planned vs actual update</td><td><span class="tag tag-ns">upcoming</span></td></tr>
+        <tr><td>Annual</td><td>March 2027</td><td>Final achievement capture</td><td><span class="tag tag-ns">upcoming</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <div class="card-head">Admin actions</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn btn-sm" onclick="toast('Unlock request sent.')">Unlock a locked goal</button>
+      <button class="btn btn-sm" onclick="exportCSV()">Export achievement CSV</button>
+      <button class="btn btn-sm" onclick="toast('Escalation config saved.')">Configure escalation rules</button>
+    </div>
+  </div>`;
+}
+window.saveCycle=()=>{
+  S.cycle.name=document.getElementById('cyc-name')?.value||S.cycle.name;
+  S.cycle.status=document.getElementById('cyc-status')?.value||S.cycle.status;
+  audit('Updated cycle settings','cycle');toast('Cycle saved.');R();
+};
+
+// ── ADMIN: AUDIT ──────────────────────────────────────────────
+function pgAudit(){
+  return `
+  <div class="pg-title">Audit log</div>
+  <div class="pg-sub">Every goal change after lock is recorded here</div>
+  <div class="card">
+    <table class="tbl">
+      <thead><tr><th>Date</th><th>By</th><th>Action</th><th>Note</th></tr></thead>
+      <tbody>
+        ${S.audit.map(a=>{
+          const u=USERS.find(x=>x.id===a.uid);
+          return `<tr>
+            <td style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#aaa">${a.date}</td>
+            <td><strong style="font-size:12px">${u?.name||'System'}</strong><br><span style="font-size:10px;color:#bbb">${u?.role||''}</span></td>
+            <td style="font-size:12px">${a.action}</td>
+            <td style="font-size:11px;color:#bbb">${a.note||'—'}</td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table>
+  </div>`;
+}
+
+// ── REPORTS ───────────────────────────────────────────────────
+function pgReports(){
+  const isAdmin=S.me.role==='admin';
+  const emps=isAdmin?USERS.filter(u=>u.role==='employee'):getReports(S.me);
+  return `
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:6px">
+    <div><div class="pg-title">Reports</div><div class="pg-sub">Achievement data across the team</div></div>
+    <button class="btn btn-primary btn-sm" style="margin-top:4px" onclick="exportCSV()">↓ Export CSV</button>
+  </div>
+  <div class="card">
+    <div class="card-head">Achievement summary</div>
+    <table class="tbl">
+      <thead><tr><th>Employee</th><th>Dept</th><th>Goals</th><th>Approved</th><th>Avg score</th><th>Check-ins</th></tr></thead>
+      <tbody>
+        ${emps.map(e=>{
+          const gs=S.goals.filter(g=>g.uid===e.id);
+          const ap=gs.filter(g=>g.status==='approved').length;
+          const os=overallScore(e.id);const b=band(os);
+          const ci=S.checkins.filter(c=>gs.some(g=>g.id===c.gid)).length;
+          return `<tr>
+            <td><strong>${e.name}</strong></td>
+            <td>${e.dept}</td>
+            <td>${gs.length}</td>
+            <td>${ap}</td>
+            <td><span class="tag" style="background:${b.bg};color:${b.col}">${os}%</span></td>
+            <td>${ci}</td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <div class="card-head">Goal distribution by thrust area</div>
+    ${THRUST.map(t=>{
+      const n=S.goals.filter(g=>g.thrust===t).length;
+      if(!n) return '';
+      const p=Math.round(n/S.goals.length*100);
+      return `<div style="margin-bottom:8px">
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:#888;margin-bottom:3px"><span>${t}</span><span style="font-family:'IBM Plex Mono',monospace">${n}</span></div>
+        <div class="prog-track" style="height:5px"><div class="prog-fill" style="width:${p}%;background:#1a1a1a"></div></div>
+      </div>`;
+    }).join('')}
+  </div>`;
+}
+
+window.exportCSV=()=>{
+  const rows=[['Name','Dept','Goal','Thrust','UoM','Target','Actual','Score','Status']];
+  S.goals.forEach(g=>{
+    const u=USERS.find(x=>x.id===g.uid);
+    const s=score(g);
+    rows.push([u?.name||'',u?.dept||'',g.title,g.thrust,g.uom,g.target,g.actual||0,s!=null?s+'%':'n/a',g.status]);
+  });
+  const csv=rows.map(r=>r.map(v=>`"${v}"`).join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
+  a.download='achievement_report.csv';a.click();
+  toast('CSV downloaded.');
+};
+
+// ── MODALS ────────────────────────────────────────────────────
+window.openModal=(type,...args)=>{
+  S.modal={type,args};R();
+};
+
+function renderModal(){
+  const {type,args}=S.modal;
+  let inner='';
+  if(type==='add_goal') inner=modalAddGoal();
+  else if(type==='edit_goal') inner=modalEditGoal(args[0]);
+  else if(type==='update_ach') inner=modalUpdateAch(args[0]);
+  else if(type==='mgr_edit') inner=modalMgrEdit(args[0]);
+  else if(type==='add_checkin') inner=modalAddCheckin(args[0],args[1]);
+  else if(type==='push_goal') inner=modalPushGoal();
+  else if(type==='emp_detail') inner=modalEmpDetail();
+  return `<div class="modal-bg" onclick="if(event.target===this)closeModal()"><div class="modal-box">${inner}</div></div>`;
+}
+window.closeModal=()=>{S.modal=null;R()};
+
+function mField(label,el){return `<div class="field"><label>${label}</label>${el}</div>`}
+function mSel(id,opts,cur){return `<select id="${id}">${opts.map(o=>`<option ${o===cur?'selected':''}>${o}</option>`).join('')}</select>`}
+
+function modalAddGoal(){
+  const u=S.me;
+  const wt=weightSum(u.id);
+  const rem=100-wt;
+  return `<div class="modal-title">Add a goal</div>
+  ${mField('Goal title',`<input id="ng-title" placeholder="e.g. Increase monthly sales to ₹40L">`)}
+  ${mField('Thrust area',mSel('ng-thrust',THRUST,THRUST[0]))}
+  ${mField('Unit of measurement',mSel('ng-uom',UOM,UOM[0]))}
+  <div class="field-row">
+    ${mField('Target',`<input id="ng-target" placeholder="e.g. 100">`)}
+    ${mField('Unit',`<input id="ng-unit" placeholder="e.g. %, INR, days">`)}
+  </div>
+  ${mField(`Weightage % (min 10, remaining: ${rem})`,`<input id="ng-wt" type="number" min="10" max="${rem}" value="${Math.min(20,rem)}">`)}
+  <div class="modal-footer">
+    <button class="btn btn-sm" onclick="closeModal()">Cancel</button>
+    <button class="btn btn-primary btn-sm" onclick="saveNewGoal()">Add goal</button>
+  </div>`;
+}
+window.saveNewGoal=()=>{
+  const title=document.getElementById('ng-title')?.value?.trim();
+  const thrust=document.getElementById('ng-thrust')?.value;
+  const uom=document.getElementById('ng-uom')?.value;
+  const target=document.getElementById('ng-target')?.value;
+  const unit=document.getElementById('ng-unit')?.value||'';
+  const wt=parseInt(document.getElementById('ng-wt')?.value)||0;
+  if(!title||!target){toast('Title and target are required.');return;}
+  if(wt<10){toast('Min weightage is 10%.');return;}
+  const existing=weightSum(S.me.id);
+  if(existing+wt>100){toast(`Would exceed 100% (currently ${existing}%).`);return;}
+  S.goals.push({id:'g'+Date.now(),uid:S.me.id,title,thrust,uom,target:isNaN(+target)?target:+target,unit,wt,status:'draft',actual:0,qst:'Not Started',updated:null,shared:false});
+  closeModal();toast('Goal added as draft.');
+};
+
+function modalEditGoal(gid){
+  const g=S.goals.find(x=>x.id===gid);
+  return `<div class="modal-title">Edit goal</div>
+  ${mField('Goal title',`<input id="eg-title" value="${g.title}">`)}
+  ${mField('Thrust area',mSel('eg-thrust',THRUST,g.thrust))}
+  ${mField('Unit of measurement',mSel('eg-uom',UOM,g.uom))}
+  <div class="field-row">
+    ${mField('Target',`<input id="eg-target" value="${g.target}">`)}
+    ${mField('Unit',`<input id="eg-unit" value="${g.unit||''}">`)}
+  </div>
+  ${mField('Weightage %',`<input id="eg-wt" type="number" min="10" value="${g.wt}">`)}
+  <div class="modal-footer">
+    <button class="btn btn-sm" onclick="closeModal()">Cancel</button>
+    <button class="btn btn-primary btn-sm" onclick="saveEditGoal('${gid}')">Save</button>
+  </div>`;
+}
+window.saveEditGoal=gid=>{
+  const g=S.goals.find(x=>x.id===gid);
+  const nw=parseInt(document.getElementById('eg-wt')?.value)||g.wt;
+  const other=S.goals.filter(x=>x.uid===S.me.id&&x.id!==gid).reduce((s,x)=>s+x.wt,0);
+  if(other+nw>100){toast('Weightage would exceed 100%.');return;}
+  if(nw<10){toast('Min 10%.');return;}
+  const t=document.getElementById('eg-target')?.value;
+  g.title=document.getElementById('eg-title')?.value||g.title;
+  g.thrust=document.getElementById('eg-thrust')?.value||g.thrust;
+  g.uom=document.getElementById('eg-uom')?.value||g.uom;
+  g.target=t&&!isNaN(+t)?+t:(t||g.target);
+  g.unit=document.getElementById('eg-unit')?.value||g.unit;
+  g.wt=nw;g.status='draft';
+  audit('Edited goal: '+g.title,gid);closeModal();toast('Saved.');
+};
+
+function modalUpdateAch(gid){
+  const g=S.goals.find(x=>x.id===gid);
+  const isDate=g.uom==='Timeline (date)';
+  return `<div class="modal-title">Update achievement</div>
+  <div style="background:#f9f8f5;border-radius:5px;padding:10px 12px;margin-bottom:14px;font-size:12px;color:#777">${g.title}<br><span style="color:#bbb">Target: ${g.target} ${g.unit} · ${g.uom}</span></div>
+  ${mField('Actual achievement',`<input id="ua-actual" type="${isDate?'date':'number'}" value="${g.actual||''}">`)}
+  ${mField('Status',mSel('ua-status',['Not Started','On Track','Completed'],g.qst))}
+  <div class="modal-footer">
+    <button class="btn btn-sm" onclick="closeModal()">Cancel</button>
+    <button class="btn btn-primary btn-sm" onclick="saveAch('${gid}')">Save</button>
+  </div>`;
+}
+window.saveAch=gid=>{
+  const g=S.goals.find(x=>x.id===gid);
+  const val=document.getElementById('ua-actual')?.value;
+  g.actual=g.uom==='Timeline (date)'?val:(!isNaN(+val)?+val:val);
+  g.qst=document.getElementById('ua-status')?.value||g.qst;
+  g.updated=new Date().toISOString().slice(0,10);
+  audit('Updated actual: '+g.title+' = '+g.actual,gid,'Q1 update');
+  closeModal();toast('Achievement saved.');
+};
+
+function modalMgrEdit(gid){
+  const g=S.goals.find(x=>x.id===gid);
+  return `<div class="modal-title">Edit & approve</div>
+  <div style="font-size:12px;color:#888;margin-bottom:14px">You can adjust the target or weightage before approving.</div>
+  ${mField('Target',`<input id="me-target" value="${g.target}">`)}
+  ${mField('Weightage %',`<input id="me-wt" type="number" min="10" value="${g.wt}">`)}
+  <div class="modal-footer">
+    <button class="btn btn-sm" onclick="closeModal()">Cancel</button>
+    <button class="btn btn-primary btn-sm" onclick="saveMgrEdit('${gid}')">Save & approve</button>
+  </div>`;
+}
+window.saveMgrEdit=gid=>{
+  const g=S.goals.find(x=>x.id===gid);
+  const t=document.getElementById('me-target')?.value;
+  g.target=t&&!isNaN(+t)?+t:(t||g.target);
+  g.wt=parseInt(document.getElementById('me-wt')?.value)||g.wt;
+  g.status='approved';audit('Manager edited & approved: '+g.title,gid,'Inline edit');
+  closeModal();toast('Approved and locked.');
+};
+
+function modalAddCheckin(gid,empId){
+  const g=S.goals.find(x=>x.id===gid);
+  const emp=USERS.find(u=>u.id===empId);
+  const s=score(g);
+  return `<div class="modal-title">Check-in note</div>
+  <div style="background:#f9f8f5;border-radius:5px;padding:10px 12px;margin-bottom:14px;font-size:12px;color:#777">${g?.title}<br><span style="color:#bbb">${emp?.name} · score: ${s!=null?s+'%':'n/a'}</span></div>
+  ${mField('Note (required)',`<textarea id="ci-comment" placeholder="Describe the discussion: what's working, blockers, and next steps..."></textarea>`)}
+  <div class="modal-footer">
+    <button class="btn btn-sm" onclick="closeModal()">Cancel</button>
+    <button class="btn btn-primary btn-sm" onclick="saveCheckin('${gid}')">Save note</button>
+  </div>`;
+}
+window.saveCheckin=gid=>{
+  const comment=document.getElementById('ci-comment')?.value?.trim();
+  if(!comment){toast('Note is required.');return;}
+  S.checkins.push({id:'c'+Date.now(),gid,mid:S.me.id,comment,date:new Date().toISOString().slice(0,10),q:'Q1'});
+  audit('Check-in note added',gid,'Q1 check-in');closeModal();toast('Check-in saved.');
+};
+
+function modalPushGoal(){
+  const reps=getReports(S.me);
+  return `<div class="modal-title">Push shared goal</div>
+  ${mField('Goal title',`<input id="pg-title" placeholder="e.g. Dept Q2 revenue target">`)}
+  ${mField('Thrust area',mSel('pg-thrust',THRUST,THRUST[0]))}
+  <div class="field-row">
+    ${mField('Target',`<input id="pg-target" placeholder="100">`)}
+    ${mField('Unit',`<input id="pg-unit" placeholder="%">`)}
+  </div>
+  <div class="field"><label>Push to</label>${reps.map(r=>`<label style="display:flex;align-items:center;gap:8px;font-size:13px;color:#444;padding:4px 0;font-weight:400;text-transform:none;letter-spacing:0"><input type="checkbox" id="pg-${r.id}" checked> ${r.name}</label>`).join('')}</div>
+  <div class="modal-footer">
+    <button class="btn btn-sm" onclick="closeModal()">Cancel</button>
+    <button class="btn btn-primary btn-sm" onclick="savePushGoal()">Push</button>
+  </div>`;
+}
+window.savePushGoal=()=>{
+  const reps=getReports(S.me);
+  const title=document.getElementById('pg-title')?.value?.trim();
+  const thrust=document.getElementById('pg-thrust')?.value;
+  const target=document.getElementById('pg-target')?.value;
+  const unit=document.getElementById('pg-unit')?.value||'';
+  if(!title||!target){toast('Title and target required.');return;}
+  let n=0;
+  reps.forEach(r=>{
+    const cb=document.getElementById('pg-'+r.id);
+    if(cb?.checked){
+      S.goals.push({id:'g'+Date.now()+r.id,uid:r.id,title,thrust,uom:'Percentage – higher better',target:+target||0,unit,wt:20,status:'approved',actual:0,qst:'Not Started',updated:null,shared:true});
+      n++;
+    }
+  });
+  audit('Pushed shared goal: '+title,'shared',`To ${n} employees`);
+  closeModal();toast(`Shared goal pushed to ${n} member(s).`);
+};
+
+function modalEmpDetail(){
+  const {u,gs}=S.modal;
+  const os=overallScore(u.id);
+  return `<div class="modal-title">${u.name}</div>
+  <div style="font-size:12px;color:#888;margin-bottom:14px">${u.dept} · Score: <strong style="color:#1a1a1a;font-family:'IBM Plex Mono',monospace">${os}%</strong></div>
+  <table class="tbl">
+    <thead><tr><th>Goal</th><th>Wt</th><th>Score</th><th>Status</th></tr></thead>
+    <tbody>
+      ${gs.map(g=>{const s=score(g);return `<tr><td style="font-size:12px">${g.title}</td><td>${g.wt}%</td><td style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:${s!=null?pcolor(s):'#bbb'}">${s!=null?s+'%':'—'}</td><td><span class="tag tag-${g.status==='approved'?'approved':g.status==='pending'?'pending':'draft'}">${g.status}</span></td></tr>`;}).join('')}
+    </tbody>
+  </table>
+  <div class="modal-footer"><button class="btn btn-primary btn-sm" onclick="closeModal()">Close</button></div>`;
+}
+
+function bind(){}
+R();
+</script>
